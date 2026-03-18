@@ -1,4 +1,4 @@
-package com.jadeilton.bff.agendador_tarefas.business.dto;
+package com.jadeilton.bff.agendador_tarefas.business.dto.out;
 
 
 import lombok.*;
@@ -8,10 +8,10 @@ import lombok.*;
 @NoArgsConstructor
 @AllArgsConstructor
 @Builder
-public class TelefoneDTO {
+public class TelefoneDTOResponse {
 
 
-    private Long id;
+
     private String numero;
     private String ddd;
 }

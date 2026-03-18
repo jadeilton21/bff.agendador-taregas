@@ -1,4 +1,4 @@
-package com.jadeilton.bff.agendador_tarefas.business.dto;
+package com.jadeilton.bff.agendador_tarefas.business.dto.in;
 
 
 import lombok.*;
@@ -8,12 +8,12 @@ import lombok.*;
 @NoArgsConstructor
 @AllArgsConstructor
 @Builder
-public class EnderecoDTO {
+public class EnderecoDTORequest {
 
 
 
 
-    private Long id;
+
     private String logradouro;
     private String numero;
     private String complemento;
