@@ -1,4 +1,4 @@
-package com.jadeilton.bff.agendador_tarefas.business.dto;
+package com.jadeilton.bff.agendador_tarefas.business.dto.in;
 
 
 import lombok.*;
@@ -10,7 +10,7 @@ import java.util.List;
 @AllArgsConstructor
 @NoArgsConstructor
 @Builder
-public class UsuarioDTO {
+public class UsuarioDTORequest {
 
 
 
@@ -18,6 +18,6 @@ public class UsuarioDTO {
     private String nome;
     private String email;
     private String senha;
-    private List<EnderecoDTO> enderecos;
-    private List<TelefoneDTO> telefone;
+    private List<EnderecoDTORequest> enderecos;
+    private List<TelefoneDTORequest> telefone;
  }
