@@ -5,45 +5,51 @@ import com.jadeilton.bff.agendador_tarefas.business.dto.in.TarefasDTORquest;
 import com.jadeilton.bff.agendador_tarefas.business.dto.out.TarefasDTOResponse;
 import com.jadeilton.bff.agendador_tarefas.business.enums.StatusNotificacoEnum;
 import org.springframework.cloud.openfeign.FeignClient;
-import org.springframework.format.annotation.DateTimeFormat;
 import org.springframework.web.bind.annotation.*;
 
 import java.time.LocalDateTime;
 import java.util.List;
-
-@FeignClient(name = "agendador-tarefas-back-and", url = "${agendador-tarefas-back-and.url}")
+@FeignClient(
+        name = "agendador-tarefas-back-and",
+        url = "${agendador-tarefas-back-and.url}"
+)
 public interface TarefasClient {
 
-    @PostMapping
-    TarefasDTOResponse gravarTarefas(@RequestBody TarefasDTORquest dto,
-                                     @RequestHeader("Authorization") String token);
+    @PostMapping("/tarefas")
+    TarefasDTOResponse gravarTarefas(
+            @RequestBody TarefasDTORquest dto,
+            @RequestHeader("Authorization") String token
+    );
 
-
-    @GetMapping("/eventos")
+    @GetMapping("/tarefas/eventos")
     List<TarefasDTOResponse> buscaListaDeTarefasPorPeriodo(
-            @RequestParam @DateTimeFormat(iso = DateTimeFormat.ISO.DATE_TIME) LocalDateTime dataInicial,
-            @RequestParam @DateTimeFormat(iso = DateTimeFormat.ISO.DATE_TIME) LocalDateTime dataFinal,
-            @RequestHeader("Authorization") String token);
+            @RequestParam("dataInicial") LocalDateTime dataInicial,
+            @RequestParam("dataFinal") LocalDateTime dataFinal,
+            @RequestHeader("Authorization") String token
+    );
 
+    @GetMapping("/tarefas")
+    List<TarefasDTOResponse> buscaTarefasPorEmail(
+            @RequestHeader("Authorization") String token
+    );
 
+    @DeleteMapping("/tarefas")
+    void deletaTarefaPorId(
+            @RequestParam("id") String id,
+            @RequestHeader("Authorization") String token
+    );
 
-    @GetMapping
-    List<TarefasDTOResponse> buscaTarefasPorEmail(@RequestHeader("Authorization") String token);
+    @PatchMapping("/tarefas")
+    TarefasDTOResponse alterarStatus(
+            @RequestParam("status") StatusNotificacoEnum status,
+            @RequestParam("id") String id,
+            @RequestHeader("Authorization") String token
+    );
 
-
-
-
-    @DeleteMapping
-    void deletaTarefaPorId(@RequestParam("id") String id, @RequestHeader("Authorization") String token);
-
-    @PatchMapping
-    TarefasDTOResponse alterarStatus(@RequestParam("Status") StatusNotificacoEnum status,
-                                     @RequestParam("Id") String id,
-                                     @RequestHeader("Authorization") String token);
-
-
-    @PutMapping
-    TarefasDTOResponse updateTarefas(@RequestBody TarefasDTORquest dto, @RequestParam("id") String id,
-                                     @RequestHeader("Authorization") String token) ;
-
+    @PutMapping("/tarefas")
+    TarefasDTOResponse updateTarefas(
+            @RequestBody TarefasDTORquest dto,
+            @RequestParam("id") String id,
+            @RequestHeader("Authorization") String token
+    );
 }

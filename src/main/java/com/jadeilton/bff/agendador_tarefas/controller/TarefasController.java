@@ -17,10 +17,12 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.time.LocalDateTime;
+import java.time.OffsetDateTime;
 import java.util.List;
 
 @RestController
 @RequiredArgsConstructor
+@RequestMapping("/tarefas")
 @Tag(name = "Tarefas",description = "Cadastro Tarefas de Usuários")
 @SecurityRequirement(name = SecurityConfig.SECURITY_SCHEME)
 public class TarefasController {
@@ -43,16 +45,14 @@ public class TarefasController {
 
 
     @GetMapping("/eventos")
-    @Operation(summary = "Busca Tarefas por Périodo",description = "Busca tarefas cadastadas por período")
-    @ApiResponse(responseCode = "200",description = "Tarefas Encontradas")
-    @ApiResponse(responseCode = "500", description = "Erro de Servidor")
     public ResponseEntity<List<TarefasDTOResponse>> buscaListaDeTarefasPorPeriodo(
-            @RequestParam @DateTimeFormat(iso = DateTimeFormat.ISO.DATE_TIME)LocalDateTime dataInicial,
-            @RequestParam @DateTimeFormat(iso = DateTimeFormat.ISO.DATE_TIME) LocalDateTime dataFinal, @RequestHeader
-         (name = "Authorization", required = false) String token){
+            @RequestParam @DateTimeFormat(iso = DateTimeFormat.ISO.DATE_TIME) LocalDateTime dataInicial,
+            @RequestParam @DateTimeFormat(iso = DateTimeFormat.ISO.DATE_TIME) LocalDateTime dataFinal,
+            @RequestHeader(name = "Authorization", required = false) String token) {
 
-
-        return ResponseEntity.ok(tarefasService.buscaTarefasAgendadasPorPeriodo(dataInicial,dataFinal,token));
+        return ResponseEntity.ok(
+                tarefasService.buscaTarefasAgendadasPorPeriodo(dataInicial, dataFinal, token)
+        );
     }
 
 

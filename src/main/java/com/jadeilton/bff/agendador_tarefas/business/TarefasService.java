@@ -15,45 +15,52 @@ import java.util.List;
 @RequiredArgsConstructor
 public class TarefasService {
 
-
     private final TarefasClient tarefasClient;
 
+    // 🔥 MÉTODO CENTRAL PRA CORRIGIR O TOKEN
+    private String formatarToken(String token) {
 
+        if (token == null) return null;
 
-    public TarefasDTOResponse gravarTarefa(String token, TarefasDTORquest dto){
-            return tarefasClient.gravarTarefas(dto, token);
+        return "Bearer " + token
+                .replace("Bearer ", "")
+                .replace("Bearer:", "")
+                .trim();
     }
 
-
-    public List<TarefasDTOResponse> buscaTarefasAgendadasPorPeriodo(LocalDateTime dataIncial,
-                                                                    LocalDateTime dataFinal,
-                                                                    String token){
-
-     return tarefasClient.buscaListaDeTarefasPorPeriodo(dataFinal,dataIncial,token);
-
+    public TarefasDTOResponse gravarTarefa(String token, TarefasDTORquest dto) {
+        return tarefasClient.gravarTarefas(dto, formatarToken(token));
     }
 
+    public List<TarefasDTOResponse> buscaTarefasAgendadasPorPeriodo(
+        LocalDateTime dataInicial,
+            LocalDateTime dataFinal,
+            String token) {
 
+        if (dataInicial.isAfter(dataFinal)) {
+            throw new IllegalArgumentException("dataInicial não pode ser maior que dataFinal");
+        }
 
-
-    public List<TarefasDTOResponse> buscaTarefasPorEmail(String token){
-                return tarefasClient.buscaTarefasPorEmail(token);
+        return tarefasClient.buscaListaDeTarefasPorPeriodo(
+                dataInicial,
+                dataFinal,
+                formatarToken(token)
+        );
     }
 
-
-    public void deletaTarefaPorId(String id, String token){
-        tarefasClient.deletaTarefaPorId(id,token);
+    public List<TarefasDTOResponse> buscaTarefasPorEmail(String token) {
+        return tarefasClient.buscaTarefasPorEmail(formatarToken(token));
     }
 
-
-    public TarefasDTOResponse alteraStatus(StatusNotificacoEnum status, String id, String token){
-
-        return tarefasClient.alterarStatus(status,id,token);
+    public void deletaTarefaPorId(String id, String token) {
+        tarefasClient.deletaTarefaPorId(id, formatarToken(token));
     }
 
-    public TarefasDTOResponse updateTarefas(TarefasDTORquest dto, String id, String token){
-        return tarefasClient.updateTarefas(dto, id, token);
-
+    public TarefasDTOResponse alteraStatus(StatusNotificacoEnum status, String id, String token) {
+        return tarefasClient.alterarStatus(status, id, formatarToken(token));
     }
 
+    public TarefasDTOResponse updateTarefas(TarefasDTORquest dto, String id, String token) {
+        return tarefasClient.updateTarefas(dto, id, formatarToken(token));
+    }
 }
