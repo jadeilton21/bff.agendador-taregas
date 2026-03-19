@@ -20,7 +20,6 @@ import java.time.LocalDateTime;
 import java.util.List;
 
 @RestController
-@RequestMapping("/tarefas")
 @RequiredArgsConstructor
 @Tag(name = "Tarefas",description = "Cadastro Tarefas de Usuários")
 @SecurityRequirement(name = SecurityConfig.SECURITY_SCHEME)
