@@ -17,7 +17,6 @@ public class TarefasService {
 
     private final TarefasClient tarefasClient;
 
-    // 🔥 MÉTODO CENTRAL PRA CORRIGIR O TOKEN
     private String formatarToken(String token) {
 
         if (token == null) return null;
@@ -33,7 +32,7 @@ public class TarefasService {
     }
 
     public List<TarefasDTOResponse> buscaTarefasAgendadasPorPeriodo(
-        LocalDateTime dataInicial,
+            LocalDateTime dataInicial,
             LocalDateTime dataFinal,
             String token) {
 
@@ -45,6 +44,7 @@ public class TarefasService {
                 dataInicial,
                 dataFinal,
                 formatarToken(token)
+
         );
     }
 

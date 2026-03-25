@@ -7,12 +7,10 @@ import com.jadeilton.bff.agendador_tarefas.business.enums.StatusNotificacoEnum;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Value;
-import org.springframework.cglib.core.Local;
 import org.springframework.scheduling.annotation.Scheduled;
 import org.springframework.stereotype.Service;
 
 import java.time.LocalDateTime;
-import java.time.OffsetDateTime;
 import java.util.List;
 
 @Service
@@ -29,6 +27,7 @@ public class CronService {
 
     @Value("${usuario.senha}")
     private String senha;
+    private StatusNotificacoEnum statusNotificacoEnum;
 
     @Scheduled(cron = "${cron.horario}")
 
@@ -46,8 +45,7 @@ public class CronService {
                 tarefasService.buscaTarefasAgendadasPorPeriodo(
                         horaFutura,
                         horaFuturaMaisCinco,
-                        token
-                );
+                        token);
         log.info("Tarefas encontradas " + listaTarefas);
         listaTarefas.forEach(tarefa -> {
             emailService.enviaEmail(tarefa);
@@ -55,7 +53,7 @@ public class CronService {
             tarefasService.alteraStatus(StatusNotificacoEnum.NOTIFICADO, tarefa.getId(), "Bearer " + token);
         });
 
-
+        log.info("Finalizada a busca por notificaçãoes e tarefas!");
     }
 
     public String login(LoginRequestDTO dto) {

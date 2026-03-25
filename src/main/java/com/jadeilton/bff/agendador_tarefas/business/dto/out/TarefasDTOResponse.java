@@ -22,7 +22,7 @@ public class TarefasDTOResponse {
 
 
 
-    @JsonFormat(pattern = "yyyy-MM-dd'T'HH:mm:ss")
+    @JsonFormat(pattern = "dd/MM/yyyy HH:mm")
     private LocalDateTime dataEvento;
 
     private String emailUsuario;

@@ -17,7 +17,6 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.time.LocalDateTime;
-import java.time.OffsetDateTime;
 import java.util.List;
 
 @RestController
@@ -46,9 +45,9 @@ public class TarefasController {
 
     @GetMapping("/eventos")
     public ResponseEntity<List<TarefasDTOResponse>> buscaListaDeTarefasPorPeriodo(
-            @RequestParam @DateTimeFormat(iso = DateTimeFormat.ISO.DATE_TIME) LocalDateTime dataInicial,
-            @RequestParam @DateTimeFormat(iso = DateTimeFormat.ISO.DATE_TIME) LocalDateTime dataFinal,
-            @RequestHeader(name = "Authorization", required = false) String token) {
+            @RequestParam @DateTimeFormat(pattern = "dd/MM/yyyy HH:mm") LocalDateTime dataInicial,
+            @RequestParam @DateTimeFormat(pattern = "dd/MM/yyyy HH:mm") LocalDateTime dataFinal,
+            @RequestHeader(name = "Authorization", required = false) String token ) {
 
         return ResponseEntity.ok(
                 tarefasService.buscaTarefasAgendadasPorPeriodo(dataInicial, dataFinal, token)
