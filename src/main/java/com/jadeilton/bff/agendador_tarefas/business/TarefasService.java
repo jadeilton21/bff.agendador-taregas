@@ -9,6 +9,7 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
 import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
 import java.util.List;
 
 @Service
@@ -40,11 +41,15 @@ public class TarefasService {
             throw new IllegalArgumentException("dataInicial não pode ser maior que dataFinal");
         }
 
-        return tarefasClient.buscaListaDeTarefasPorPeriodo(
-                dataInicial,
-                dataFinal,
-                formatarToken(token)
+        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd/MM/yyyy HH:mm");
 
+        String dataInicialFormatada = dataInicial.format(formatter);
+        String dataFinalFormatada = dataFinal.format(formatter);
+
+        return tarefasClient.buscaListaDeTarefasPorPeriodo(
+                dataInicialFormatada,
+                dataFinalFormatada,
+                formatarToken(token)
         );
     }
 
