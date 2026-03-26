@@ -5,6 +5,7 @@ import com.jadeilton.bff.agendador_tarefas.business.dto.in.TarefasDTORquest;
 import com.jadeilton.bff.agendador_tarefas.business.dto.out.TarefasDTOResponse;
 import com.jadeilton.bff.agendador_tarefas.business.enums.StatusNotificacoEnum;
 import org.springframework.cloud.openfeign.FeignClient;
+import org.springframework.format.annotation.DateTimeFormat;
 import org.springframework.web.bind.annotation.*;
 
 import java.time.LocalDateTime;
@@ -23,8 +24,12 @@ public interface TarefasClient {
 
     @GetMapping("/tarefas/eventos")
     List<TarefasDTOResponse> buscaListaDeTarefasPorPeriodo(
-            @RequestParam("dataInicial") LocalDateTime dataInicial,
-            @RequestParam("dataFinal") LocalDateTime dataFinal,
+
+            @RequestParam("dataInicial")
+            String  dataInicial,
+
+            @RequestParam("dataFinal")
+            String  dataFinal,
             @RequestHeader("Authorization") String token
     );
 
