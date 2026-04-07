@@ -11,8 +11,8 @@ import org.springframework.web.bind.annotation.*;
 import java.time.LocalDateTime;
 import java.util.List;
 @FeignClient(
-        name = "agendador-tarefas-back-and",
-        url = "${agendador-tarefas-back-and.url}"
+        name = "agendador-tarefas-back-end",
+        url = "${agendador-tarefas-back-end.url}"
 )
 public interface TarefasClient {
 
